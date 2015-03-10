@@ -111,4 +111,10 @@ describe('WinstonContext', function () {
         expect(spy, 'was called once');
         expect(spy, 'was called with', 'info', 'test', {meta: 2});
     });
+
+    it('Doesn\'t break horribly in non-winston logger', function () {
+        expect(function () {
+            new WinstonContext({log: function () {}}, null, {});
+        }, 'not to throw');
+    });
 });

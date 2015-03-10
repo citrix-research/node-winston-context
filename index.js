@@ -43,13 +43,16 @@ function WinstonContext(logger, prefix, metadata) {
 
     // Generate convenience log methods based on what the parent has
     var that = this;
-    Object.keys(this._parent.levels).forEach(function (level) {
-        that[level] = function () {
-            // build argument list (level, msg, ... [string interpolate], [{metadata}], [callback])
-            var args = [level].concat(Array.prototype.slice.call(arguments));
-            that.log.apply(that, args);
-        };
-    });
+
+    if (this._parent && this._parent.levels && _isObject(this._parent.levels)) {
+        Object.keys(this._parent.levels).forEach(function (level) {
+            that[level] = function () {
+                // build argument list (level, msg, ... [string interpolate], [{metadata}], [callback])
+                var args = [level].concat(Array.prototype.slice.call(arguments));
+                that.log.apply(that, args);
+            };
+        });
+    }
 }
 
 WinstonContext.prototype.getContext = function getContext(prefix, metadata) {
