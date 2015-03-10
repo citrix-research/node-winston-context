@@ -6,6 +6,13 @@
   "directories": {
     "test": "test"
   },
+  "homepage": "https://github.com/citrix-research/node-winston-context",
+  "bugs": "https://github.com/citrix-research/node-winston-context/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/citrix-research/node-winston-context.git"
+  },
+
   "scripts": {
     "test": "mocha && jshint ."
   },
