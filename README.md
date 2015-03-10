@@ -55,4 +55,4 @@ Plenty! Please [report them](https://github.com/citrix-research/node-winston-con
 License
 -------
 
-ICS
+ISC
