@@ -1,6 +1,6 @@
 {
   "name": "winston-context",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Creates shallow proxies of Winston loggers with context.",
   "main": "index.js",
   "directories": {
