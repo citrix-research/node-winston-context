@@ -63,6 +63,11 @@ WinstonContext.prototype.getContext = function getContext(prefix, metadata) {
     );
 };
 
+// Allow logs to be closed.
+WinstonContext.prototype.close = function close(id) {
+    return this._parent.close(id);
+};
+
 // Proxy log function
 WinstonContext.prototype.log = function log(level, name /*, metadata, callback*/) {
     // Stolen procesing code from Winston itself
