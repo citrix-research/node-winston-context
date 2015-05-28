@@ -31,10 +31,10 @@ API
 `ctx = new WinstonContext(logger, [prefix, [meta]])` Creates a new contextual logger.
 It mocks `.log` and the per-level helpers set on the original `logger`.
 
-`ctx.log(level, name, meta, callback)` and
+`ctx.log(level, name, meta, [meta, [...,]] callback)` and
 `ctx.{silly,debug,verbose,info,warn,error}(name, meta, callback)` (or whatever
 else level-names you've given Winston) behave like they use to, except the
-added contextual prefix and metadata.
+added contextual prefix, metadata and allows handling multiple meta-objects.
 
 `ctx.getContext([prefix, [meta]])` gets a contextual logger with the
 added prefix/meta-data. May be called recursively. Also of note is that it

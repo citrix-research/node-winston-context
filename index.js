@@ -71,10 +71,14 @@ WinstonContext.prototype.close = function close(id) {
 // Proxy log function
 WinstonContext.prototype.log = function log(level, name /*, metadata, callback*/) {
     // Stolen procesing code from Winston itself
-    var args = Array.prototype.slice.call(arguments, 1); // All args except first
+    var args = Array.prototype.slice.call(arguments, 2); // All args except level and name
 
     var callback = typeof args[args.length -1] === 'function' ? args.pop() : null;
-    var meta = _isObject(args[args.length - 1]) ? args.pop() : {};
+
+    // Take all arguments after level and name that are objects
+    var meta = args.filter(_isObject).reduce(function (prev, cur) {
+        return _defaults(prev, cur);
+    }, {});
 
     this._parent.log(
         level,

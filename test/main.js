@@ -112,6 +112,15 @@ describe('WinstonContext', function () {
         expect(spy, 'was called with', 'info', 'test', {meta: 2});
     });
 
+    it('Handles multiple metadata-contexts', function () {
+        var ctx = new WinstonContext(logger, null, {a: 1, b: 2, c: 4});
+
+        ctx.info('test', {c: 3}, {d: 4});
+
+        expect(spy, 'was called once');
+        expect(spy, 'was called with', 'info', 'test', {a: 1, b: 2, c: 3, d: 4});
+    });
+
     it('Doesn\'t break horribly in non-winston logger', function () {
         expect(function () {
             new WinstonContext({log: function () {}}, null, {});
