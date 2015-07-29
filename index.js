@@ -80,12 +80,10 @@ WinstonContext.prototype.log = function log(level, name /*, metadata, callback*/
         return _defaults(prev, cur);
     }, {});
 
-    this._parent.log(
-        level,
-        this._prefix + name,
-        _defaults({}, meta, this._metadata),
-        callback
-    );
+    this._parent.log.apply(this._parent,[level,this._prefix + name]
+        .concat(args)
+        .concat([ _defaults({}, meta, this._metadata),callback]));
+    
 };
 
 // Helper functio to install `getContext` on root winston logger
