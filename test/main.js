@@ -121,6 +121,15 @@ describe('WinstonContext', function () {
         expect(spy, 'was called with', 'info', 'test', {a: 1, b: 2, c: 3, d: 4});
     });
 
+    it('Handles %s placeholders', function () {
+        var ctx = new WinstonContext(logger, null, {a: 1});
+
+        ctx.info('test %s %s %s', {context: 1}, 'foo', 1);
+
+        expect(spy, 'was called once');
+        expect(spy, 'was called with', 'info', 'test foo 1 %s', {a: 1, context: 1});
+    });
+
     it('Doesn\'t break horribly in non-winston logger', function () {
         expect(function () {
             new WinstonContext({log: function () {}}, null, {});

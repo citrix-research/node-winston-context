@@ -75,12 +75,19 @@ WinstonContext.prototype.log = function log(level, name /*, metadata, callback*/
 
     var callback = typeof args[args.length -1] === 'function' ? args.pop() : null;
 
-    // Take all arguments after level and name that are objects
-    var meta = args.filter(_isObject).reduce(function (prev, cur) {
-        return _defaults(prev, cur);
-    }, {});
+    var meta = {};
+    var nonMeta = [];
+
+    for(var i=0; i<args.length; i+=1) {
+        if (_isObject(args[i])) {
+            meta = _defaults(meta, args[i]);
+        } else {
+            nonMeta.push(args[i]);
+        }
+    }
 
     this._parent.log.apply(this._parent,[level,this._prefix + name]
+        .concat(nonMeta)
         .concat([ _defaults({}, meta, this._metadata),callback]));
 };
 
