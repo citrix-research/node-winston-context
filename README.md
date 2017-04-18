@@ -1,29 +1,30 @@
 node-winston-context
 ====================
 
-Contextual logger for Winston, here used for adding per-request context to
+Contextual logger for Winston, used for adding per-request context to
 server logs:
 
-    var WinstonContext = require('winston-context');
-    var logger = require('winston');
-    
-    // Create a per-request child
-    var requestCtx = new WinstonContext(logger, '', {
-        requestId: (Math.random()* 1e20).toString(36)
-    });
+```js
+var WinstonContext = require('winston-context');
+var logger = require('winston');
 
-    requestCtx.info('server.init'); // info: server.init requestId=2yn869172v40g
+// Create a per-request child
+var requestCtx = new WinstonContext(logger, '', {
+    requestId: (Math.random()* 1e20).toString(36)
+});
 
-    // User is authenticated, so we add userId
-    requestCtx = requestCtx.getContext('', { userId: 42 });
+requestCtx.info('server.init'); // info: server.init requestId=2yn869172v40g
 
-    requestCtx.info('auth.ok'); // info: auth.ok requestId=2yn869172v40g userId=42
+// User is authenticated, so we add userId
+requestCtx = requestCtx.getContext('', { userId: 42 });
 
-    // We now have to log a lot of stuff for this user in a specific place
-    var log = requestCtx.getContext('server.system.subsystem');
+requestCtx.info('auth.ok'); // info: auth.ok requestId=2yn869172v40g userId=42
 
-    log.warn('err', { what: 'User not found' }); // warn: sever.system.subsystem.err requestId=2yn869172v40g userId=24 waht="User not found"
+// We now have to log a lot of stuff for this user in a specific place
+var log = requestCtx.getContext('server.system.subsystem');
 
+log.warn('err', { what: 'User not found' }); // warn: sever.system.subsystem.err requestId=2yn869172v40g userId=24 what="User not found"
+```
 
 API
 ---
@@ -32,9 +33,9 @@ API
 It mocks `.log` and the per-level helpers set on the original `logger`.
 
 `ctx.log(level, name, meta, [meta, [...,]] callback)` and
-`ctx.{silly,debug,verbose,info,warn,error}(name, meta, callback)` (or whatever
-else level-names you've given Winston) behave like they use to, except the
-added contextual prefix, metadata and allows handling multiple meta-objects.
+`ctx.{silly,debug,verbose,info,warn,error}(name, meta, callback)` (or any other
+level-names you've given Winston) behave like they used to, except the
+added contextual prefix, meta-data and allows handling multiple meta-objects.
 
 `ctx.getContext([prefix, [meta]])` gets a contextual logger with the
 added prefix/meta-data. May be called recursively. Also of note is that it

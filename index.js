@@ -91,7 +91,7 @@ WinstonContext.prototype.log = function log(level, name /*, metadata, callback*/
         .concat([ _defaults({}, meta, this._metadata),callback]));
 };
 
-// Helper functio to install `getContext` on root winston logger
+// Helper function to install `getContext` on root winston logger
 WinstonContext.patchWinstonWithGetContext = function patchWinstonWithGetContext(winstonInstance) {
     winstonInstance.getContext = function getContext(prefix, meta) {
         return new WinstonContext(winstonInstance, prefix, meta);
